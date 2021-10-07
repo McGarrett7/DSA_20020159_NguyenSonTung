@@ -23,4 +23,13 @@ public class CompareList {
 
         return true;
     }
+
+    public static void main(String[] args) {
+        SinglyLinkedListNode head1 = new SinglyLinkedListNode(1);
+        SinglyLinkedListNode head2 = new SinglyLinkedListNode(2);
+        SinglyLinkedListNode third = new SinglyLinkedListNode(3);
+        head1.next = third;
+        head2.next = third;
+        compareLists(head1, head2);
+    }
 }

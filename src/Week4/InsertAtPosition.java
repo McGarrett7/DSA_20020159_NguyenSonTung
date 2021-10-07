@@ -18,7 +18,7 @@ public class InsertAtPosition {
 
         if (position == 0) {
             node.next = head;
-            head = node;
+            head = node;         //new head
         } else {
             SinglyLinkedListNode p = head;
             while (--position != 0) {
@@ -30,9 +30,21 @@ public class InsertAtPosition {
         return head;
     }
 
+    static void printLinkedList(SinglyLinkedListNode head) {
+        SinglyLinkedListNode node = head;
+        while (node != null) {
+            System.out.println(node.data);
+            node = node.next;
+        }
+    }
+
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        insertNodeAtPosition();
+        SinglyLinkedListNode head = new SinglyLinkedListNode(1);
+        SinglyLinkedListNode second = new SinglyLinkedListNode(2);
+        SinglyLinkedListNode third = new SinglyLinkedListNode(3);
+        head.next = second;
+        second.next = third;
+        SinglyLinkedListNode newList = insertNodeAtPosition(head, 0, 2);
+        printLinkedList(newList);
     }
 }

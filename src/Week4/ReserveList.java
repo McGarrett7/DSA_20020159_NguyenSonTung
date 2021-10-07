@@ -11,7 +11,7 @@ public class ReserveList {
         }
     }
 
-    static SinglyLinkedListNode reverse(SinglyLinkedListNode head) {
+    static SinglyLinkedListNode reverseList(SinglyLinkedListNode head) {
         SinglyLinkedListNode node = head;
         SinglyLinkedListNode prev = null, next;
 
@@ -22,5 +22,14 @@ public class ReserveList {
             node = next;
         }
         return prev;
+    }
+
+    public static void main(String[] args) {
+        SinglyLinkedListNode head = new SinglyLinkedListNode(1);
+        SinglyLinkedListNode second = new SinglyLinkedListNode(2);
+        SinglyLinkedListNode third = new SinglyLinkedListNode(3);
+        head.next = second;
+        second.next = third;
+        reverseList(head);
     }
 }

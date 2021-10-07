@@ -17,4 +17,13 @@ public class PrintReserve {
         }
         System.out.println(head.data);
     }
+
+    public static void main(String[] args) {
+        SinglyLinkedListNode head = new SinglyLinkedListNode(1);
+        SinglyLinkedListNode second = new SinglyLinkedListNode(2);
+        SinglyLinkedListNode third = new SinglyLinkedListNode(3);
+        head.next = second;
+        second.next = third;
+        reversePrint(head);
+    }
 }

@@ -1,13 +1,5 @@
 package Week4;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.regex.*;
-
 public class InsertHead {
     static class SinglyLinkedListNode {
         public int data;
@@ -19,53 +11,29 @@ public class InsertHead {
         }
     }
 
-    static class SinglyLinkedList {
-        public SinglyLinkedListNode head;
-        public SinglyLinkedListNode tail;
-
-        public SinglyLinkedList() {
-            this.head = null;
-            this.tail = null;
-        }
-    }
-
-    public static void printSinglyLinkedList(SinglyLinkedListNode node, String sep, BufferedWriter bufferedWriter) throws IOException {
-        while (node != null) {
-            bufferedWriter.write(String.valueOf(node.data));
-
-            node = node.next;
-
-            if (node != null) {
-                bufferedWriter.write(sep);
-            }
-        }
-    }
-
     static SinglyLinkedListNode insertNodeAtHead(SinglyLinkedListNode llist, int data) {
         SinglyLinkedListNode node = new SinglyLinkedListNode(data);
-        node.next = llist;
-
+        if (llist != null) {
+            node.next = llist;
+        }
         return node;
     }
 
-    private static final Scanner scanner = new Scanner(System.in);
-
-    public static void main(String[] args) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
-        SinglyLinkedList llist = new SinglyLinkedList();
-
-        int llistCount = scanner.nextInt();
-        scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-
-        for (int i = 0; i < llistCount; i++) {
-            int llistItem = scanner.nextInt();
-            scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
-
-            SinglyLinkedListNode llist_head = insertNodeAtHead(llist.head, llistItem);
-
-            llist.head = llist_head;
+    static void printLinkedList(SinglyLinkedListNode head) {
+        SinglyLinkedListNode node = head;
+        while (node != null) {
+            System.out.println(node.data);
+            node = node.next;
         }
     }
-}
 
+    public static void main(String[] args) {
+        SinglyLinkedListNode head = new SinglyLinkedListNode(1);
+        SinglyLinkedListNode second = new SinglyLinkedListNode(2);
+        SinglyLinkedListNode third = new SinglyLinkedListNode(3);
+        head.next = second; // Link first node with the second node
+        second.next = third;
+        SinglyLinkedListNode newList = insertNodeAtHead(head, 0);
+        printLinkedList(newList);
+    }
+}
