@@ -1,6 +1,5 @@
 package Week5;
 
-
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -30,23 +29,39 @@ public class QueueTwoStacks {
     public static class MyQueue<T> {
         Stack<T> stack1 = new Stack<>();
         Stack<T> stack2 = new Stack<>();
+//        T front;
 
         public void enqueue(T num) {
-            while (!stack1.empty()) {
-                stack2.push(stack1.pop());
-            }
+//            if (stack1.empty()) {
+//                front = num;
+//            }
             stack1.push(num);
-            while (!stack2.empty()) {
-                stack1.push(stack2.pop());
-            }
         }
 
         public void dequeue() {
-            stack1.pop();
+            if (stack2.isEmpty()) {
+                while (!stack1.isEmpty()) {
+                    stack2.push(stack1.pop());
+                }
+            }
+            stack2.pop();
         }
 
         public T peek() {
-            return stack1.peek();
+            if (stack2.isEmpty()) {
+                while (!stack1.isEmpty()) {
+                    stack2.push(stack1.pop());
+                }
+            }
+            return stack2.peek();
+//            // REDUCE PEEK
+//            if (!stack2.isEmpty()) {
+//                return stack2.peek();
+//            }
+//            return front;
         }
     }
 }
+
+
+
