@@ -15,22 +15,14 @@ public class BalancedBrackets {
                 if (stack.isEmpty()) {
                     return "NO";
                 } else {
-                    switch (x) {
-                        case ')' :
-                            if (stack.pop() != '(') {
-                                return "NO";
-                            }
-                            break;
-                        case '}' :
-                            if (stack.pop() != '{') {
-                                return "NO";
-                            }
-                            break;
-                        case ']' :
-                            if (stack.pop() != '[') {
-                                return "NO";
-                            }
-                            break;
+                    if (x == ')' && stack.pop() != '('){
+                        return "NO";
+                    }
+                    else if (x == '}' && stack.pop() != '{'){
+                        return "NO";
+                    }
+                    else if (x == ']' && stack.pop() != '['){
+                        return "NO";
                     }
                 }
             }
