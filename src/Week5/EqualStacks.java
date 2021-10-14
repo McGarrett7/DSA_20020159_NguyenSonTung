@@ -5,11 +5,15 @@ import java.util.Stack;
 
 public class EqualStacks {
     public static int equalStacks(List<Integer> h1, List<Integer> h2, List<Integer> h3) {
+
+        //Height of the first,... stack
         int sum1 = 0, sum2 = 0, sum3 = 0;
+
         Stack<Integer> s1 = new Stack<>();
         Stack<Integer> s2 = new Stack<>();
         Stack<Integer> s3 = new Stack<>();
 
+        //Initialize the stacks and their heights
         for (int i = h1.size() - 1; i >= 0; i--) {
             s1.push(h1.get(i));
             sum1 += h1.get(i);
@@ -24,8 +28,11 @@ public class EqualStacks {
         }
 
         while (!s1.empty() && !s2.empty() && !s3.empty()) {
+
+            //Initialize minStack with the minimum height
             int min = Math.min(sum1, Math.min(sum2, sum3));
 
+            //Remove cylinders from stack 1 until your height is <= the smallest
             if (sum1 > min) {
                 sum1 -= s1.pop();
             }
