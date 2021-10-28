@@ -4,27 +4,25 @@ import java.util.*;
 
 public class QuickSort1 {
     public static List<Integer> quickSort(List<Integer> arr) {
-        List<Integer> array = new ArrayList<Integer>();
-        int lo = 0;
-        int eq = 0;
-        int hi = 0;
+        List<Integer> list = new ArrayList<Integer>();
+        int left = 0, equal = 0, right = 0;
         for (int i = 1; i < arr.size(); i++) {
             if (arr.get(0) > arr.get(i)) {
-                array.add(lo, arr.get(i));
-                lo++;
-                eq++;
-                hi++;
+                list.add(left, arr.get(i));             //left < p (pt đầu tiên)
+                left++;
+                equal++;
+                right++;
             } else if (arr.get(0) > arr.get(i)) {
-                array.add(hi, arr.get(i));
-                hi++;
+                list.add(right, arr.get(i));
+                right++;
             } else {
-                array.add(eq, arr.get(i));
-                eq++;
-                hi++;
+                list.add(equal, arr.get(i));
+                equal++;
+                right++;
             }
         }
-        array.add(lo, arr.get(0));
-        return array;
+        list.add(left, arr.get(0));
+        return list;
     }
 
     public static void main(String[] args) {
@@ -35,6 +33,6 @@ public class QuickSort1 {
         array.add(5);
         array.add(7);
 
-        quickSort(array);
+        System.out.print(quickSort(array));
     }
 }
