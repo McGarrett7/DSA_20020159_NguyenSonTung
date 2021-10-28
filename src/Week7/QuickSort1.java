@@ -6,13 +6,14 @@ public class QuickSort1 {
     public static List<Integer> quickSort(List<Integer> arr) {
         List<Integer> list = new ArrayList<Integer>();
         int left = 0, equal = 0, right = 0;
+        int p = arr.get(0);
         for (int i = 1; i < arr.size(); i++) {
-            if (arr.get(0) > arr.get(i)) {
+            if (p > arr.get(i)) {
                 list.add(left, arr.get(i));             //left < p (pt đầu tiên)
                 left++;
                 equal++;
                 right++;
-            } else if (arr.get(0) > arr.get(i)) {
+            } else if (p > arr.get(i)) {
                 list.add(right, arr.get(i));
                 right++;
             } else {
@@ -21,7 +22,7 @@ public class QuickSort1 {
                 right++;
             }
         }
-        list.add(left, arr.get(0));
+        list.add(left, p);
         return list;
     }
 
