@@ -8,18 +8,18 @@ public class JesseandCookies {
         PriorityQueue<Integer> pqueue = new PriorityQueue<Integer>();
         int count = 0;
         for(int num : A){
-            pqueue.add(num);
+            pqueue.add(num);   //chèn vào cuối pq
         }
-        while(pqueue.peek() != null && pqueue.peek() < k && pqueue.size()>1){
-            int smallest = pqueue.poll();
-            int smaller = pqueue.poll();
+        while(pqueue.peek() != null && pqueue.peek() < k && pqueue.size() > 1){
+            int m1 = pqueue.poll();     // pt đầu (nhỏ nhất): O(log(n))
+            int m2 = pqueue.poll();    //lấy pt đầu (nhỏ thứ 2) và xóa nó: O(log(n))
 
-            int sum = smallest + 2 * smaller;
+            int sum = m1 + 2 * m2;
             pqueue.add(sum);
             count++;
         }
 
-        if(pqueue.peek() == null || pqueue.peek()<k){
+        if(pqueue.peek() == null || pqueue.peek() < k){
             return -1;
         }
         return count;

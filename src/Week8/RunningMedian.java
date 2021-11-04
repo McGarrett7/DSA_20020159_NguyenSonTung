@@ -8,44 +8,41 @@ import java.util.PriorityQueue;
 public class RunningMedian {
 
     public static List<Double> runningMedian(List<Integer> a) {
+        //Cơ chế chia dãy thành 2 nửa: min nửa sau va max nửa trước
         PriorityQueue<Integer> maxPQ = new PriorityQueue<>(Collections.reverseOrder());
         PriorityQueue<Integer> minPQ = new PriorityQueue<>();
-        List<Double> result  = new ArrayList<>();
-        for(int b: a){
+        List<Double> result = new ArrayList<>();
+        for (int b : a) {
             result.add(getMedianAndAddNumber(maxPQ, minPQ, b));
         }
         return result;
     }
-    public static double getMedianAndAddNumber(PriorityQueue<Integer> maxHeap, PriorityQueue<Integer> minHeap, int num){
+
+    public static double getMedianAndAddNumber(PriorityQueue<Integer> maxHeap, PriorityQueue<Integer> minHeap, int num) {
         double med = 0.0;
 
-        if(maxHeap.size() == minHeap.size()){
+        if (maxHeap.size() == minHeap.size()) {
 
-            if(minHeap.size() == 0 || minHeap.peek() < num){
+            if (minHeap.size() == 0 || minHeap.peek() < num) {
                 minHeap.add(num);
-                maxHeap.add(minHeap.remove());
-            }
-            else{
+                //cân đối 2 dãy max và min
+                maxHeap.add(minHeap.remove());   //xóa print các bước thêm phía trc vào pq
+            } else {
                 maxHeap.add(num);
             }
-
-            med = maxHeap.peek() * 1.0;
-        }
-
-        else{
-            if(minHeap.size() == 0 || maxHeap.peek() > num){
+            med = maxHeap.peek() * 1.0;  //pt min trong maxHeap nhưng max trong maxPQ
+        } else {
+            if (minHeap.size() == 0 || maxHeap.peek() > num) {
                 maxHeap.add(num);
                 minHeap.add(maxHeap.remove());
-
-            }
-            else{
+            } else {
                 minHeap.add(num);
             }
-            med = (maxHeap.peek() + minHeap.peek())/2.0;
+            med = (maxHeap.peek() + minHeap.peek()) / 2.0;
         }
         return med;
     }
-
+}
 
 //    public static List<Double> runningMedian(List<Integer> a) {
 //        List<Double> medians=new ArrayList<>();
@@ -92,4 +89,4 @@ public class RunningMedian {
 //            return big.peek();
 //        }
 //    }
-}
+
