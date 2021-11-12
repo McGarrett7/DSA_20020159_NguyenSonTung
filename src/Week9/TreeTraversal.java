@@ -16,11 +16,11 @@ class Node {
 
 class Solution {
 
-    public static void inOrder(Node root) {
+    public static void inOrder(Node root) {     //O(N)
         if(root != null) {
-            inOrder(root.left);
-            System.out.print(root.data + " ");
-            inOrder(root.right);
+            inOrder(root.left);         // Traverse the left subtree
+            System.out.print(root.data + " ");  // Display the data part of the root (or current node)
+            inOrder(root.right);         // Traverse the right subtree
         }
 
 //        Deque<Node> stack = new ArrayDeque<Node>();
