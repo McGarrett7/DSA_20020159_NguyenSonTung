@@ -1,22 +1,6 @@
 package Week6;
 
 public class InsertionSort2 {
-//    static void insertionSort2(int n, int[] arr) {
-//        for (int i = 2; i <= n; i++) {
-//            insertionSort1(i, arr);
-//        }
-//    }
-//
-//    static void insertionSort1(int n, int[] arr) {
-//        int last = arr[n - 1];
-//        int i = n - 2;
-//        for (; (i >= 0) && (arr[i] > last); i--) {
-//            arr[i + 1] = arr[i];
-//           // printArray(arr);
-//        }
-//        arr[i + 1] = last;
-//        printArray(arr);
-//    }
 
     public static void insertionSort2(int n, int[] arr) {
         for (int i = 0; i < n - 1; i++) {

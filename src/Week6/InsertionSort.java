@@ -3,6 +3,8 @@ package Week6;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdArrayIO;
 
+import java.util.Arrays;
+
 public class InsertionSort {
 
     public static void insertionSort(Comparable[] a) {
@@ -28,13 +30,11 @@ public class InsertionSort {
     }
 
     public static void main(String[] args) {
-        //String[] a = StdIn.readAllStrings();
-        In in = new In("F:\\algs4-data\\4Kints.txt");      // tạo luồng đọc từ file
+        In in = new In("F:\\CodeUET\\Java\\Library\\algs4-data\\4Kints.txt");      // tạo luồng đọc từ file
         int[] a = in.readAllInts();                             // đọc toàn bộ file vào mảng a
+        Integer[] aInteger = Arrays.stream(a).boxed().toArray( Integer[]::new );
         long start = System.currentTimeMillis();
-        // xử lý dữ liệu trong mảng a
-        //InsertionSort.insertionSort(a);
-
+        InsertionSort.insertionSort(aInteger);
         long end = System.currentTimeMillis();
         long time = end - start;                               // thời gian chạy bằng end - start
         StdArrayIO.print(a);
