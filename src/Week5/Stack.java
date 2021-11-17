@@ -34,14 +34,9 @@ public class Stack<T> implements Iterable<T> {
         if (!isEmpty()) {
             size--;
         }
-//        if (isEmpty()) ("Stack underflow");
-//        Item item = first.item;        // save item to return
-//        first = first.next;            // delete first node
-//        n--;
-//        return item;                   // return the saved item
     }
 
-    public T getFirst() {
+    public T peek() {
         if (!isEmpty()) {
             return data[size-1];
         } else {
@@ -52,14 +47,12 @@ public class Stack<T> implements Iterable<T> {
     /**
      * Returns a string representation of this stack.
      *
-     * @return the sequence of items in this stack order, separated by spaces
+     * @return the sequence of items in this stack in LIFO order, separated by spaces
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (T item : this) {
-            s.append(item);      // concatenate
-            s.append(' ');
-        }
+        for (T item : this)
+            s.append(item + " ");               // concatenate string
         return s.toString();
     }
 
@@ -103,6 +96,7 @@ public class Stack<T> implements Iterable<T> {
         System.out.println("Stack: " + s);
     }
 }
+
 
 //public class Stack<Item> implements Iterable<Item> {
 //    private Node<Item> first;     // top of stack

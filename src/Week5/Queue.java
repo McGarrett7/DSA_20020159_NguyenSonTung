@@ -15,6 +15,7 @@ public class Queue<T> implements Iterable<T> {
         return size == 0;
     }
 
+    //Returns the number of items in this queue.
     public int size() {
         return size;
     }
@@ -25,6 +26,7 @@ public class Queue<T> implements Iterable<T> {
         }
     }
 
+    //Removes and returns the item on this queue that was least recently added.
     public void dequeue() {
         if (!isEmpty()) {
             size--;
@@ -34,7 +36,8 @@ public class Queue<T> implements Iterable<T> {
         }
     }
 
-    public T getFirst() {
+    //Returns the item least recently added to this queue.
+    public T peek() {
         if (!isEmpty()) {
             return data[0];
         } else {
@@ -42,15 +45,19 @@ public class Queue<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * Returns a string representation of this stack.
+     *
+     * @return the sequence of items in this stack in FIFO order, separated by spaces
+     */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (T item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (T item : this) 
+            s.append(item + " ");
         return s.toString();
     }
 
+    //Returns an iterator to this stack that iterates through the items.
     public Iterator<T> iterator() {
         return new Iterator<T>() {
             private int i = 0;
@@ -90,6 +97,7 @@ public class Queue<T> implements Iterable<T> {
         System.out.println("Queue: " + q);
     }
 }
+
 
 //public class Queue<Item> implements Iterable<Item> {
 //    private Node<Item> first;    // beginning of queue

@@ -17,6 +17,7 @@ public class LinkedQueue<T> implements Iterable<T> {
         }
     }
 
+    //Initializes an empty queue
     public LinkedQueue() {
         head = null;
         tail = null;
@@ -27,10 +28,12 @@ public class LinkedQueue<T> implements Iterable<T> {
         return head == null;
     }
 
+    //return the number of items in this queue
     public int size() {
         return size;
     }
 
+    //Adds the item to this queue.
     public void enqueue(T item) {
         Node<T> newNode = new Node<T>(item, null);
 
@@ -43,7 +46,8 @@ public class LinkedQueue<T> implements Iterable<T> {
         size++;
     }
 
-
+    //Removes and returns the item on this queue that was least recently added.
+    //FIFO
     public void dequeue() {
         if (!isEmpty()) {
             head = head.next;
@@ -52,7 +56,8 @@ public class LinkedQueue<T> implements Iterable<T> {
         }
     }
 
-    public T getFirst() {
+    //Returns the item least recently added to this queue.
+    public T peek() {
         if (!isEmpty()){
             return head.data;
         } else {
@@ -60,15 +65,15 @@ public class LinkedQueue<T> implements Iterable<T> {
         }
     }
 
+    //Returns a string representation of this queue.
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (T item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (T item : this)
+            s.append(item + " ");
         return s.toString();
     }
 
+    //Returns an iterator that iterates over the items in this queue
     public Iterator<T> iterator()  {
         return new Iterator<T>() {
             private Node<T> current = head;
@@ -107,6 +112,7 @@ public class LinkedQueue<T> implements Iterable<T> {
         System.out.println("Queue: " + q);
     }
 }
+
 
 //public class LinkedQueue<Item> implements Iterable<Item> {
 //    private int n;         // number of elements on queue

@@ -10,9 +10,9 @@ public class QueueTwoStacks {
 
         int n = sc.nextInt();
         for (int i = 0; i < n; i++) {
-            int query = sc.nextInt();
+            int q = sc.nextInt();
 
-            switch (query) {
+            switch (q) {
                 case 1:
                     queue.enqueue(sc.nextInt());
                     break;
@@ -29,13 +29,9 @@ public class QueueTwoStacks {
     public static class MyQueue<T> {
         Stack<T> stack1 = new Stack<>();
         Stack<T> stack2 = new Stack<>();
-//        T front;
 
-        public void enqueue(T num) {
-//            if (stack1.empty()) {
-//                front = num;
-//            }
-            stack1.push(num);
+        public void enqueue(T n) {
+            stack1.push(n);
         }
 
         public void dequeue() {
@@ -54,11 +50,7 @@ public class QueueTwoStacks {
                 }
             }
             return stack2.peek();
-//            // REDUCE PEEK
-//            if (!stack2.isEmpty()) {
-//                return stack2.peek();
-//            }
-//            return front;
+
         }
     }
 }

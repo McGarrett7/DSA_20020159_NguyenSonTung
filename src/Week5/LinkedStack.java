@@ -41,7 +41,8 @@ public class LinkedStack<T> implements Iterable<T> {
         }
     }
 
-    public T getFirst() {
+    //Returns the item least recently added to this queue.
+    public T peek() {
         if (!isEmpty()) {
             return head.data;
         } else {
@@ -49,12 +50,15 @@ public class LinkedStack<T> implements Iterable<T> {
         }
     }
 
+    /**
+     * Returns a string representation of this stack.
+     *
+     * @return the sequence of items in this stack in LIFO order, separated by spaces
+     */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (T item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (T item : this)
+            s.append(item + " ");
         return s.toString();
     }
 
@@ -96,6 +100,8 @@ public class LinkedStack<T> implements Iterable<T> {
         System.out.println("Stack: " + s);
     }
 }
+
+
 //
 //
 //public class LinkedStack<Item> implements Iterable<Item> {

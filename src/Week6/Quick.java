@@ -1,8 +1,6 @@
 package Week6;
 
-import edu.princeton.cs.algs4.StdIn;
-import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.*;
 
 public class Quick {
 
@@ -125,21 +123,31 @@ public class Quick {
      *
      * @param args the command-line arguments
      */
+//    public static void main(String[] args) {
+//        String[] a = StdIn.readAllStrings();
+//        Quick.sort(a);
+//        show(a);
+//        assert isSorted(a);
+//
+//        // shuffle
+//        StdRandom.shuffle(a);
+//
+//        // display results again using select
+//        StdOut.println();
+//        for (int i = 0; i < a.length; i++) {
+//            String ith = (String) Quick.select(a, i);
+//            StdOut.println(ith);
+//        }
+//    }
+
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Quick.sort(a);
-        show(a);
-        assert isSorted(a);
 
-        // shuffle
-        StdRandom.shuffle(a);
-
-        // display results again using select
-        StdOut.println();
-        for (int i = 0; i < a.length; i++) {
-            String ith = (String) Quick.select(a, i);
-            StdOut.println(ith);
-        }
+        int N = Integer.parseInt(args[0]);
+        Double[] a = new Double[N];
+        for (int i = 0; i < N; i++)
+            a[i] = StdRandom.uniform();
+        sort(a);
+        for (int i = 0; i < N; i++)
+            System.out.println(a[i]);
     }
-
 }

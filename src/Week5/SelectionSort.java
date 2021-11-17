@@ -28,19 +28,16 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-//        int N = Integer.parseInt(args[0]);
-//        Double[] a = new Double[N];
-//        for (int i = 0; i < N; i++)
-//            a[i] = StdRandom.uniform();
-//        selectionSort(a);
-//        for (int i = 0; i < N; i++)
-//            System.out.println(a[i]);
-
         int n = 10;
         Integer[] randArray = new Random().ints(0, 100).limit(n).boxed().toArray(Integer[]::new);
+        //Integer[] arr = { 0, 1, 3, 2, 4, 5, 6, 9, 8, 7 };
         System.out.println("randArray = " + Arrays.toString(randArray));
+        long start = System.currentTimeMillis();
         selectionSort(randArray);
-        System.out.println("sortedArray = " + Arrays.toString(randArray));
+        long end = System.currentTimeMillis();
+        System.out.println("sortedArray = " + Arrays.toString(randArray) + " ");
+        long time = end - start;
         System.out.println();
+        System.out.println(time);
     }
 }
