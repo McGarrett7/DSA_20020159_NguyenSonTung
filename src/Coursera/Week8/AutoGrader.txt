@@ -1,0 +1,67 @@
+See the Assessment Guide for information on how to interpret this report.
+
+Want to receive personalized feedback on this submission? You can pay to have a teaching assistant read and provide personalized feedback on your submission at https://mooc.codepost.io.
+
+ASSESSMENT SUMMARY
+
+Compilation:  FAILED (0 errors, 3 warnings)
+API:          FAILED (1 error)
+
+SpotBugs:     No tests available for autograding.
+PMD:          PASSED
+Checkstyle:   No tests available for autograding.
+
+Correctness:  No tests available for autograding.
+Memory:       No tests available for autograding.
+Timing:       No tests available for autograding.
+
+Aggregate score: 0.00%
+[ Compilation: 5%, API: 5%, Style: 0%, Correctness: 90% ]
+
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+3.4K Nov 18 01:10 Percolation.java
+2.6K Nov 18 01:10 PercolationStats.java
+
+
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
+
+
+% javac Percolation.java
+*-----------------------------------------------------------
+Percolation.java:34: warning: [deprecation] connected(int,int) in WeightedQuickUnionUF has been deprecated
+        if (i == 1 && !uf.connected(currentSite, top))
+                         ^
+Percolation.java:111: warning: [deprecation] connected(int,int) in WeightedQuickUnionUF has been deprecated
+        if (uf.connected(top, currentSite))
+              ^
+Percolation.java:125: warning: [deprecation] connected(int,int) in WeightedQuickUnionUF has been deprecated
+        if (ufPerc.connected(top, bottom))
+                  ^
+3 warnings
+
+% javac PercolationStats.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Percolation:
+The following methods are missing:
+  * public int numberOfOpenSites()
+
+
+PercolationStats:
+
+================================================================
+
+
+ABORTING: either the compilation or API test failed.
