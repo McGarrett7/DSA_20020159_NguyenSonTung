@@ -4,148 +4,152 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Deque<Item> implements Iterable<Item> {
-
     private Node first;
     private Node last;
     private int size;
 
     private class Node {
-        Item item;
-        Node next;
+        Item data;
         Node pre;
+        Node next;
+
+        Node(Item data) {
+            this.data = data;
+            pre = null;
+            next = null;
+        }
+
     }
 
     // construct an empty deque
-    public Deque(){}
+    public Deque() {
+    }
 
     // is the deque empty?
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
     // return the number of items on the deque
-    public int size(){
+    public int size() {
         return size;
     }
 
     // add the item to the front
-    public void addFirst(Item item){
-        if (item == null)
-            throw new IllegalArgumentException("item is null");
+    public void addFirst(Item item) {
+        if (item == null) throw new IllegalArgumentException();
 
-        Node newNode = new Node();
-        newNode.item = item;
+        Node oldFirst = first;
+        first = new Node(item);
 
-        if (size == 0) {
-            first = newNode;
-            last = newNode;
+        if (isEmpty()) {
+            last = first;
+        } else {
+            first.next = oldFirst;
+            oldFirst.pre = first;
         }
-        else {
-            newNode.next = first;
-            first.pre = newNode;
-            first = newNode;
-            newNode.pre = null;
-        }
-        this.size++;
+
+        size++;
     }
 
     // add the item to the back
-    public void addLast(Item item){
-        if (item == null)
-            throw new IllegalArgumentException("item is null");
+    public void addLast(Item item) {
+        if (item == null) throw new IllegalArgumentException();
 
-        Node newNode = new Node();
-        newNode.item = item;
+        Node oldLast = last;
+        last = new Node(item);
 
-        if (size == 0) {
-            first = newNode;
-            last = newNode;
+        if (isEmpty()) {
+            first = last;
+        } else {
+            last.pre = oldLast;
+            oldLast.next = last;
         }
-        else {
-            last.next = newNode;
-            newNode.pre = last;
-            last = newNode;
-            newNode.next = null;
-        }
+
         size++;
     }
 
     // remove and return the item from the front
-    public Item removeFirst(){
-        if (size == 0)
-            throw new NoSuchElementException("Deque is empty");
+    public Item removeFirst() {
+        if (isEmpty()) throw new NoSuchElementException();
 
-        Item returnItem = first.item;
+        Item ans = first.data;
+        size--;
 
-        if (size == 1) {
+        if (isEmpty()) {
             first = null;
             last = null;
-        }
-        else {
+        } else {
             first = first.next;
             first.pre = null;
         }
-        size--;
 
-        return returnItem;
+        return ans;
     }
 
     // remove and return the item from the back
-    public Item removeLast(){
-        if (size == 0)
-            throw new NoSuchElementException("Deque is empty");
-        Item returnItem = last.item;
+    public Item removeLast() {
+        if (isEmpty()) throw new NoSuchElementException();
 
-        if (size == 1) {
+        Item ans = last.data;
+        size--;
+
+        if (isEmpty()) {
             first = null;
             last = null;
-        }
-        else {
+        } else {
             last = last.pre;
             last.next = null;
         }
-        size--;
-        return returnItem;
+
+        return ans;
     }
 
     // return an iterator over items in order from front to back
-    public Iterator<Item> iterator(){
-        return new ListIterator();
+    public Iterator<Item> iterator() {
+        return new DequeIterator();
     }
 
-    private class ListIterator implements Iterator<Item> {
-        private Node cur = first;
+    // unit testing (required)
+    public static void main(String[] args) {
+        Deque<Integer> deque = new Deque<>();
+        System.out.println("Empty: " + deque.isEmpty());
+        System.out.println("Size: " + deque.size());
+        deque.addFirst(2);
+        deque.addLast(3);
+        deque.addFirst(3123);
+        System.out.println(deque.removeFirst());
+        deque.addLast(323123);
+        System.out.println(deque.removeLast());
+        deque.addLast(4);
+        deque.addFirst(1);
+
+        System.out.println("Empty: " + deque.isEmpty());
+        System.out.println("Size: " + deque.size());
+        for (Integer i: deque) {
+            System.out.println(i + " ");
+        }
+    }
+
+    private class DequeIterator implements Iterator<Item> {
+        private Node current = first;
 
         @Override
         public boolean hasNext() {
-            return (cur != null);
+            return current != null;
         }
 
         @Override
         public Item next() {
-            if (!hasNext())
-                throw new NoSuchElementException("No more Objects in the deque");
-
-            Item returnItem = cur.item;
-            cur = cur.next;
-
-            return returnItem;
+            if (!hasNext()) throw new NoSuchElementException();
+            Item ans = current.data;
+            current = current.next;
+            return ans;
         }
-    }
 
-    // unit testing (required)
-    public static void main(String[] args){
-        Deque<String> deque = new Deque<String>();
-        System.out.println(deque.size());
-        deque.addFirst("2");
-        deque.addFirst("5");
-        deque.addFirst("7");
-        deque.addFirst("9");
-        deque.addLast("10");
-        System.out.println(deque.size());
-        Iterator<String> iter = deque.iterator();
-        while (iter.hasNext()) {
-            System.out.println(iter.next());
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
         }
     }
 }
