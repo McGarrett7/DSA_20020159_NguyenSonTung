@@ -9,16 +9,9 @@ public class Deque<Item> implements Iterable<Item> {
     private int size;
 
     private class Node {
-        Item data;
-        Node pre;
-        Node next;
-
-        Node(Item data) {
-            this.data = data;
-            pre = null;
-            next = null;
-        }
-
+        private Item item;
+        private Node pre;
+        private Node next;
     }
 
     // construct an empty deque
@@ -40,15 +33,15 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) throw new IllegalArgumentException();
 
         Node oldFirst = first;
-        first = new Node(item);
-
+        first = new Node();
+        first.item = item;
+        first.next = oldFirst;
+        first.pre = null;
         if (isEmpty()) {
             last = first;
         } else {
-            first.next = oldFirst;
             oldFirst.pre = first;
         }
-
         size++;
     }
 
@@ -57,15 +50,15 @@ public class Deque<Item> implements Iterable<Item> {
         if (item == null) throw new IllegalArgumentException();
 
         Node oldLast = last;
-        last = new Node(item);
-
+        last = new Node();
+        last.item = item;
+        last.next = null;
+        last.pre = oldLast;
         if (isEmpty()) {
             first = last;
         } else {
-            last.pre = oldLast;
             oldLast.next = last;
         }
-
         size++;
     }
 
@@ -73,7 +66,7 @@ public class Deque<Item> implements Iterable<Item> {
     public Item removeFirst() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        Item ans = first.data;
+        Item n = first.item;
         size--;
 
         if (isEmpty()) {
@@ -84,14 +77,14 @@ public class Deque<Item> implements Iterable<Item> {
             first.pre = null;
         }
 
-        return ans;
+        return n;
     }
 
     // remove and return the item from the back
     public Item removeLast() {
         if (isEmpty()) throw new NoSuchElementException();
 
-        Item ans = last.data;
+        Item n = last.item;
         size--;
 
         if (isEmpty()) {
@@ -101,37 +94,15 @@ public class Deque<Item> implements Iterable<Item> {
             last = last.pre;
             last.next = null;
         }
-
-        return ans;
+        return n;
     }
 
     // return an iterator over items in order from front to back
     public Iterator<Item> iterator() {
-        return new DequeIterator();
+        return new ListIterator();
     }
 
-    // unit testing (required)
-    public static void main(String[] args) {
-        Deque<Integer> deque = new Deque<>();
-        System.out.println("Empty: " + deque.isEmpty());
-        System.out.println("Size: " + deque.size());
-        deque.addFirst(2);
-        deque.addLast(3);
-        deque.addFirst(3123);
-        System.out.println(deque.removeFirst());
-        deque.addLast(323123);
-        System.out.println(deque.removeLast());
-        deque.addLast(4);
-        deque.addFirst(1);
-
-        System.out.println("Empty: " + deque.isEmpty());
-        System.out.println("Size: " + deque.size());
-        for (Integer i: deque) {
-            System.out.println(i + " ");
-        }
-    }
-
-    private class DequeIterator implements Iterator<Item> {
+    private class ListIterator implements Iterator<Item> {
         private Node current = first;
 
         @Override
@@ -142,7 +113,7 @@ public class Deque<Item> implements Iterable<Item> {
         @Override
         public Item next() {
             if (!hasNext()) throw new NoSuchElementException();
-            Item ans = current.data;
+            Item ans = current.item;
             current = current.next;
             return ans;
         }
@@ -152,4 +123,18 @@ public class Deque<Item> implements Iterable<Item> {
             throw new UnsupportedOperationException();
         }
     }
-}
+
+    // unit testing (required)
+    public static void main(String[] args) {
+        Deque<Integer> test = new Deque<>();
+        System.out.println(test.size());
+        test.addFirst(5);
+        test.addFirst(3);
+        test.addFirst(2);
+        test.addFirst(9);
+        test.addLast(7);
+        System.out.println(test.removeFirst());
+        System.out.println(test.size());
+        System.out.println(test.removeLast());
+        }
+    }
