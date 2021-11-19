@@ -6,14 +6,14 @@ Compilation:  PASSED (0 errors, 4 warnings)
 API:          PASSED
 
 SpotBugs:     PASSED
-PMD:          PASSED
+PMD:          FAILED (1 warning)
 Checkstyle:   PASSED
 
-Correctness:  49/49 tests passed
+Correctness:  48/49 tests passed
 Memory:       124/124 tests passed
 Timing:       193/193 tests passed
 
-Aggregate score: 100.00%
+Aggregate score: 98.78%
 [ Compilation: 5%, API: 5%, Style: 0%, Correctness: 60%, Timing: 10%, Memory: 20% ]
 
 
@@ -21,9 +21,9 @@ ASSESSMENT DETAILS
 
 The following files were submitted:
 ----------------------------------
-3.6K Nov 19 01:52 Deque.java
- 433 Nov 19 01:52 Permutation.java
-4.2K Nov 19 01:52 RandomizedQueue.java
+3.4K Nov 19 11:33 Deque.java
+ 433 Nov 19 11:33 Permutation.java
+3.2K Nov 19 11:33 RandomizedQueue.java
 
 
 ********************************************************************************
@@ -36,28 +36,28 @@ The following files were submitted:
 
 % javac RandomizedQueue.java
 *-----------------------------------------------------------
-RandomizedQueue.java:11: warning: [unchecked] unchecked cast
-        this.items = (Item[]) new Object[1];
-                              ^
+RandomizedQueue.java:6: warning: [unchecked] unchecked cast
+    private Item[] queue = (Item[]) new Object[1];
+                                    ^
   required: Item[]
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:29: warning: [unchecked] unchecked cast
-            Item[] newItems = (Item[]) new Object[items.length * 2];
-                                       ^
+RandomizedQueue.java:27: warning: [unchecked] unchecked cast
+            Item[] temp = (Item[]) new Object[2 * queue.length];
+                                   ^
   required: Item[]
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:54: warning: [unchecked] unchecked cast
-            Item[] newItems = (Item[]) new Object[items.length/2 + 1];
-                                       ^
+RandomizedQueue.java:42: warning: [unchecked] unchecked cast
+            Item[] temp = (Item[]) new Object[queue.length / 2];
+                                   ^
   required: Item[]
   found:    Object[]
   where Item is a type-variable:
     Item extends Object declared in class RandomizedQueue
-RandomizedQueue.java:139: warning: [unchecked] unchecked cast
+RandomizedQueue.java:96: warning: [unchecked] unchecked cast
             Item[] ans = (Item[]) new Object[size];
                                   ^
   required: Item[]
@@ -98,6 +98,8 @@ Permutation:
 
 % pmd .
 *-----------------------------------------------------------
+RandomizedQueue.java:55: Unnecessary use of fully qualified name 'java.util.NoSuchElementException' due to existing import 'java.util.NoSuchElementException'. [UnnecessaryFullyQualifiedName]
+PMD ends with 1 warning.
 
 
 ================================================================
@@ -404,10 +406,70 @@ Test 16: check randomness of sample() by enqueueing n items, repeatedly calling
 Test 17: check randomness of dequeue() by enqueueing n items, dequeueing n items,
          and seeing whether each of the n! permutations is equally likely
   * n = 2, trials = 12000
+
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+               AB         0    6000.0          0.00
+               BA     12000    6000.0      16635.53
+        -------------------------------------------
+                      12000   12000.0      16635.53
+    
+    G-statistic = 16635.53 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
+
   * n = 3, trials = 12000
+
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+              ABC         0    2000.0          0.00
+              ACB         0    2000.0          0.00
+              BAC         0    2000.0          0.00
+              BCA         0    2000.0          0.00
+              CAB         0    2000.0          0.00
+              CBA     12000    2000.0      43002.23
+        -------------------------------------------
+                      12000   12000.0      43002.23
+    
+    G-statistic = 43002.23 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
+
   * n = 4, trials = 12000
+
+            value  observed  expected   2*O*ln(O/E)
+        -------------------------------------------
+             ABCD         0     500.0          0.00
+             ABDC         0     500.0          0.00
+             ACBD         0     500.0          0.00
+             ACDB         0     500.0          0.00
+             ADBC         0     500.0          0.00
+             ADCB         0     500.0          0.00
+             BACD         0     500.0          0.00
+             BADC         0     500.0          0.00
+             BCAD         0     500.0          0.00
+             BCDA         0     500.0          0.00
+             BDAC         0     500.0          0.00
+             BDCA         0     500.0          0.00
+             CABD         0     500.0          0.00
+             CADB         0     500.0          0.00
+             CBAD         0     500.0          0.00
+             CBDA         0     500.0          0.00
+             CDAB         0     500.0          0.00
+             CDBA         0     500.0          0.00
+             DABC         0     500.0          0.00
+             DACB         0     500.0          0.00
+             DBAC         0     500.0          0.00
+             DBCA         0     500.0          0.00
+             DCAB         0     500.0          0.00
+             DCBA     12000     500.0      76273.29
+        -------------------------------------------
+                      12000   12000.0      76273.29
+    
+    G-statistic = 76273.29 (p-value = 0.000000, reject if p-value <= 0.0001)
+    Note: a correct solution will fail this test by bad luck 1 time in 10,000.
+
   * n = 5, trials = 12000
-==> passed
+
+==> FAILED
 
 Test 18: check randomness of iterator() by enqueueing n items, iterating over those
          n items, and seeing whether each of the n! permutations is equally likely
@@ -427,7 +489,7 @@ Test 21: call iterator() when randomized queue is empty
 ==> passed
 
 
-Total: 21/21 tests passed!
+Total: 20/21 tests passed!
 
 
 ================================================================
@@ -444,37 +506,37 @@ Running 9 total tests.
 
 Test 1a: check formatting for sample inputs from assignment specification
   % java Permutation 3 < distinct.txt
-  E
-  C
-  F
-
-  % java Permutation 3 < distinct.txt
-  C
+  D
   F
   B
 
+  % java Permutation 3 < distinct.txt
+  B
+  I
+  D
+
   % java Permutation 8 < duplicates.txt
   BB
+  BB
+  BB
+  BB
+  CC
+  BB
+  CC
   AA
-  BB
-  CC
-  BB
-  BB
-  BB
-  CC
 
 ==> passed
 
 Test 1b: check formatting for other inputs
   % java Permutation 8 < mediumTale.txt
-  of
-  it
+  the
+  the
+  the
+  times
   of
   age
-  it
-  times
   was
-  of
+  foolishness
 
   % java Permutation 0 < distinct.txt
   [no output]
@@ -584,7 +646,7 @@ Test 4: Time main() with k = 5, for inputs containing n random strings
 => passed        2000     0.00
 => passed        4000     0.00
 => passed        8000     0.00
-=> passed       16000     0.00
+=> passed       16000     0.01
 => passed       32000     0.01
 => passed       64000     0.02
 => passed      128000     0.04
@@ -601,11 +663,11 @@ Test 5: Time main() with k = 1000, for inputs containing n random strings
 => passed        2000     0.00
 => passed        4000     0.00
 => passed        8000     0.00
-=> passed       16000     0.01
+=> passed       16000     0.00
 => passed       32000     0.01
 => passed       64000     0.02
 => passed      128000     0.04
-=> passed      256000     0.08
+=> passed      256000     0.07
 => passed      512000     0.15
 ==> 10/10 tests passed
 
@@ -916,18 +978,18 @@ Test 5a-5i: Total memory usage after inserting n items,
 
                  n        bytes
 ----------------------------------------------------------
-=> passed       32           80         
-=> passed       64           80         
-=> passed      128           80         
-=> passed      256           80         
-=> passed      512           80         
-=> passed     1024           80         
-=> passed     2048           80         
-=> passed     4096           80         
-=> passed     8192           80         
+=> passed       32           72         
+=> passed       64           72         
+=> passed      128           72         
+=> passed      256           72         
+=> passed      512           72         
+=> passed     1024           72         
+=> passed     2048           72         
+=> passed     4096           72         
+=> passed     8192           72         
 ==> 9/9 tests passed
 
-Memory: 80.00   (R^2 = 1.000)
+Memory: 72.00   (R^2 = 1.000)
 
 
 Test 6a-6i: Total memory usage of iterator after inserting n items.
@@ -992,21 +1054,21 @@ Test 10: Total memory usage after inserting 4096 items, then successively
                  n        bytes
 ----------------------------------------------------------
 => passed     2049        65592         
-=> passed     1025        32832         
-=> passed      513        16448         
-=> passed      257         8256         
-=> passed      129         4160         
-=> passed       65         2112         
-=> passed       33         1088         
-=> passed       17          576         
-=> passed        9          320         
+=> passed     1025        32824         
+=> passed      513        16440         
+=> passed      257         8248         
+=> passed      129         4152         
+=> passed       65         2104         
+=> passed       33         1080         
+=> passed       17          568         
+=> passed        9          312         
 ==> 9/9 tests passed
 
-Memory: 32.00 n + 32.00   (R^2 = 1.000)
+Memory: 32.00 n + 24.00   (R^2 = 1.000)
 
 
 Min observed memory for RandomizedQueue: 8.00 n + 56.00   (R^2 = 1.000)
-Max observed memory for RandomizedQueue: 32.00 n + 32.00   (R^2 = 1.000)
+Max observed memory for RandomizedQueue: 32.00 n + 24.00   (R^2 = 1.000)
 
 Running 73 total tests.
 
@@ -1127,7 +1189,7 @@ Test 6a-6g: make n random calls to addLast(), removeLast(), isEmpty(), and size(
 => passed       65536     0.00
 => passed      128000     0.00
 => passed      256000     0.01
-=> passed      512000     0.02
+=> passed      512000     0.01
 => passed     1024000     0.03
 => passed     2048000     0.06
 ==> 12/12 tests passed
@@ -1148,7 +1210,7 @@ Test 7a-7g: make n random calls to addFirst(), addLast(), removeFirst(), removeL
 => passed      128000     0.00
 => passed      256000     0.01
 => passed      512000     0.02
-=> passed     1024000     0.04
+=> passed     1024000     0.03
 => passed     2048000     0.07
 ==> 12/12 tests passed
 
@@ -1167,7 +1229,7 @@ Test 8a-8g: make n calls to addFirst(); iterate over the n items by calling
 => passed       65536     0.00
 => passed      128000     0.00
 => passed      256000     0.00
-=> passed      512000     0.02
+=> passed      512000     0.01
 => passed     1024000     0.02
 => passed     2048000     0.04
 ==> 12/12 tests passed
@@ -1234,10 +1296,10 @@ Test 4a-k: make n calls to enqueue() followed by n calls to dequeue()
 => passed       16384     0.00
 => passed       32768     0.00
 => passed       65536     0.00
-=> passed      128000     0.01
-=> passed      256000     0.01
-=> passed      512000     0.01
-=> passed     1024000     0.03
+=> passed      128000     0.00
+=> passed      256000     0.00
+=> passed      512000     0.00
+=> passed     1024000     0.01
 ==> 11/11 tests passed
 
 
@@ -1257,7 +1319,7 @@ Test 5a-k: make n calls to enqueue() followed by n random calls to
 => passed      128000     0.01
 => passed      256000     0.02
 => passed      512000     0.03
-=> passed     1024000     0.09
+=> passed     1024000     0.07
 ==> 11/11 tests passed
 
 
@@ -1277,7 +1339,7 @@ Test 6a-k: make n calls to enqueue() followed by n random calls to
 => passed      128000     0.01
 => passed      256000     0.01
 => passed      512000     0.03
-=> passed     1024000     0.07
+=> passed     1024000     0.06
 ==> 11/11 tests passed
 
 
@@ -1297,7 +1359,7 @@ Test 7a-k: make n calls to enqueue() followed by n random calls to
 => passed      128000     0.01
 => passed      256000     0.02
 => passed      512000     0.04
-=> passed     1024000     0.10
+=> passed     1024000     0.09
 ==> 11/11 tests passed
 
 
@@ -1314,7 +1376,7 @@ Test 8a-k: make n calls to enqueue() followed by n calls each to
 => passed       32768     0.00
 => passed       65536     0.00
 => passed      128000     0.01
-=> passed      256000     0.02
+=> passed      256000     0.01
 => passed      512000     0.03
 => passed     1024000     0.07
 ==> 11/11 tests passed
@@ -1332,9 +1394,9 @@ Test 9a-i: make 100 calls to enqueue; 99 calls to dequeue;
 => passed        8192     0.00
 => passed       16384     0.00
 => passed       32768     0.00
-=> passed       65536     0.01
-=> passed      128000     0.02
-=> passed      256000     0.04
+=> passed       65536     0.00
+=> passed      128000     0.01
+=> passed      256000     0.01
 ==> 9/9 tests passed
 
 
