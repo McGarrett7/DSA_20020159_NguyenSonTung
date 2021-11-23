@@ -1,0 +1,1105 @@
+See the Assessment Guide for information on how to interpret this report.
+
+ASSESSMENT SUMMARY
+
+Compilation:  PASSED
+API:          PASSED
+
+SpotBugs:     FAILED (1 warning)
+PMD:          FAILED (2 warnings)
+Checkstyle:   FAILED (0 errors, 8 warnings)
+
+Correctness:  29/41 tests passed
+Memory:       1/1 tests passed
+Timing:       36/41 tests passed
+
+Aggregate score: 80.00%
+[ Compilation: 5%, API: 5%, Style: 0%, Correctness: 60%, Timing: 10%, Memory: 20% ]
+
+
+ASSESSMENT DETAILS
+
+The following files were submitted:
+----------------------------------
+2.1K Nov 22 02:09 BruteCollinearPoints.java
+2.6K Nov 22 02:09 FastCollinearPoints.java
+1.8K Nov 22 02:09 LineSegment.java
+2.9K Nov 22 02:09 Point.java
+
+
+********************************************************************************
+*  COMPILING                                                                    
+********************************************************************************
+
+
+% javac Point.java
+*-----------------------------------------------------------
+
+% javac LineSegment.java
+*-----------------------------------------------------------
+
+% javac BruteCollinearPoints.java
+*-----------------------------------------------------------
+
+% javac FastCollinearPoints.java
+*-----------------------------------------------------------
+
+
+================================================================
+
+
+Checking the APIs of your programs.
+*-----------------------------------------------------------
+Point:
+
+BruteCollinearPoints:
+
+FastCollinearPoints:
+
+================================================================
+
+
+********************************************************************************
+*  CHECKING STYLE AND COMMON BUG PATTERNS                                       
+********************************************************************************
+
+
+% spotbugs *.class
+*-----------------------------------------------------------
+M C WOC_WRITE_ONLY_COLLECTION_LOCAL WOC: Method new BruteCollinearPoints(Point[]) creates and initializes a collection but never reads or gains information from it  At BruteCollinearPoints.java:[line 33]
+SpotBugs ends with 1 warning.
+
+
+================================================================
+
+
+% pmd .
+*-----------------------------------------------------------
+BruteCollinearPoints.java:42: Avoid reassigning the loop control variable 'n' [AvoidReassigningLoopVariables]
+FastCollinearPoints.java:6: The private instance (or static) variable 'n' can be made 'final'; it is initialized only in the declaration or constructor. [ImmutableField]
+PMD ends with 2 warnings.
+
+
+================================================================
+
+
+% checkstyle *.java
+*-----------------------------------------------------------
+[WARN] BruteCollinearPoints.java:40:30: The local (or parameter) variable 'n' has the same name as an instance variable. Use a different name. [HiddenField]
+[WARN] BruteCollinearPoints.java:42:30: Control variable 'n' is modified inside loop. [ModifiedControlVariable]
+[WARN] Point.java:98:34: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] Point.java:99:30: '(' is preceded with whitespace. [MethodParamPad]
+[WARN] Point.java:99:35: ',' is not followed by whitespace. [WhitespaceAfter]
+[WARN] Point.java:100:34: ',' is not followed by whitespace. [WhitespaceAfter]
+Checkstyle ends with 0 errors and 6 warnings.
+
+% custom checkstyle checks for Point.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for BruteCollinearPoints.java
+*-----------------------------------------------------------
+
+% custom checkstyle checks for FastCollinearPoints.java
+*-----------------------------------------------------------
+[WARN] FastCollinearPoints.java:43:43: The numeric literal '-32767' appears to be unnecessary. [NumericLiteral]
+[WARN] FastCollinearPoints.java:43:51: The numeric literal '-32767' appears to be unnecessary. [NumericLiteral]
+Checkstyle ends with 0 errors and 2 warnings.
+
+
+================================================================
+
+
+********************************************************************************
+*  TESTING CORRECTNESS
+********************************************************************************
+
+Testing correctness of Point
+*-----------------------------------------------------------
+Running 3 total tests.
+
+Test 1: p.slopeTo(q)
+  * positive infinite slope, where p and q have coordinates in [0, 500)
+  * positive infinite slope, where p and q have coordinates in [0, 32768)
+  * negative infinite slope, where p and q have coordinates in [0, 500)
+  * negative infinite slope, where p and q have coordinates in [0, 32768)
+  * positive zero     slope, where p and q have coordinates in [0, 500)
+  * positive zero     slope, where p and q have coordinates in [0, 32768)
+  * symmetric for random points p and q with coordinates in [0, 500)
+  * symmetric for random points p and q with coordinates in [0, 32768)
+  * transitive for random points p, q, and r with coordinates in [0, 500)
+  * transitive for random points p, q, and r with coordinates in [0, 32768)
+  * slopeTo(), where p and q have coordinates in [0, 500)
+  * slopeTo(), where p and q have coordinates in [0, 32768)
+  * slopeTo(), where p and q have coordinates in [0, 10)
+  * throw a java.lang.NullPointerException if argument is null
+==> passed
+
+Test 2: p.compareTo(q)
+  * reflexive, where p and q have coordinates in [0, 500)
+  * reflexive, where p and q have coordinates in [0, 32768)
+  * antisymmetric, where p and q have coordinates in [0, 500)
+  * antisymmetric, where p and q have coordinates in [0, 32768)
+  * transitive, where p, q, and r have coordinates in [0, 500)
+  * transitive, where p, q, and r have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 500)
+  * sign of compareTo(), where p and q have coordinates in [0, 32768)
+  * sign of compareTo(), where p and q have coordinates in [0, 10)
+  * throw java.lang.NullPointerException exception if argument is null
+==> passed
+
+Test 3: p.slopeOrder().compare(q, r)
+  * reflexive, where p and q have coordinates in [0, 500)
+  * reflexive, where p and q have coordinates in [0, 32768)
+  * antisymmetric, where p, q, and r have coordinates in [0, 500)
+  * antisymmetric, where p, q, and r have coordinates in [0, 32768)
+  * transitive, where p, q, r, and s have coordinates in [0, 500)
+  * transitive, where p, q, r, and s have coordinates in [0, 32768)
+  * sign of compare(), where p, q, and r have coordinates in [0, 500)
+  * sign of compare(), where p, q, and r have coordinates in [0, 32768)
+  * sign of compare(), where p, q, and r have coordinates in [0, 10)
+  * throw java.lang.NullPointerException if either argument is null
+==> passed
+
+
+Total: 3/3 tests passed!
+
+
+================================================================
+********************************************************************************
+*  TESTING CORRECTNESS (substituting reference Point and LineSegment)
+********************************************************************************
+
+Testing correctness of BruteCollinearPoints
+*-----------------------------------------------------------
+Running 17 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - no 5 (or more) points are collinear
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 8 out of bounds for length 8
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:171)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:733)
+
+  * filename = equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test1(TestBruteCollinearPoints.java:172)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:733)
+
+  * filename = input40.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 4
+    - 4 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 6
+    - 6 missing entries in student solution, including:
+      '(1000, 26000) -> (9000, 26000) -> (11000, 26000) -> (18000, 26000)'
+
+
+==> FAILED
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test2a(TestBruteCollinearPoints.java:180)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:736)
+
+  * filename = horizontal25.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 100 out of bounds for length 100
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test2a(TestBruteCollinearPoints.java:181)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:736)
+
+==> FAILED
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:193)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:235)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:739)
+
+    - failed on trial 1 of 500
+     4
+     14586 20107
+      7270 20107
+      8219 20107
+      1335 20107
+
+  *  5 random horizontal line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:193)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:236)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:739)
+
+    - failed on trial 1 of 250
+     20
+     19792 17579
+     14538 12460
+     19431  8912
+      8603 15789
+     10390  8912
+     16992 12460
+      3802  8912
+     13646 12460
+      5907 15789
+      2688 12460
+     12736 17579
+      3691  1547
+      9006 15789
+      7130 17579
+     17256 17579
+     15329 15789
+      8942  1547
+      4382  1547
+     18150  8912
+      6477  1547
+
+  * 10 random horizontal line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 40 out of bounds for length 40
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:193)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:237)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:739)
+
+    - failed on trial 1 of 50
+
+  * 15 random horizontal line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 60 out of bounds for length 60
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.horizontalSegments(TestBruteCollinearPoints.java:193)
+    TestBruteCollinearPoints.test2b(TestBruteCollinearPoints.java:238)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:739)
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test3a(TestBruteCollinearPoints.java:244)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:742)
+
+  * filename = vertical25.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 100 out of bounds for length 100
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test3a(TestBruteCollinearPoints.java:245)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:742)
+
+==> FAILED
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:217)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:251)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:745)
+
+    - failed on trial 1 of 500
+     4
+     19349 13473
+     19349  6023
+     19349 16216
+     19349  3632
+
+  *  5 random vertical line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:217)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:252)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:745)
+
+    - failed on trial 1 of 250
+     20
+      3317 15318
+     20542 13677
+      3317  1499
+      9207 11053
+      3645 16825
+     19653 12217
+     19653 12214
+     19653  6002
+      9207 19991
+     20542  4606
+     20542 13740
+      3645 18865
+      3645 17597
+     20542  1492
+      9207 12182
+      3645  5565
+      3317 17342
+     19653 13277
+      3317  1506
+      9207 12083
+
+  * 10 random vertical line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 40 out of bounds for length 40
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:217)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:253)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:745)
+
+    - failed on trial 1 of 50
+
+  * 15 random vertical line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 60 out of bounds for length 60
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.verticalSegments(TestBruteCollinearPoints.java:217)
+    TestBruteCollinearPoints.test3b(TestBruteCollinearPoints.java:254)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:745)
+
+    - failed on trial 1 of 5
+
+==> FAILED
+
+Test 4a: points from a file with no line segments
+  * filename = random23.txt
+  * filename = random38.txt
+==> passed
+
+Test 4b: random points with no line segments
+  *  5 random points
+  * 10 random points
+  * 20 random points
+  * 50 random points
+==> passed
+
+Test 5: points from a file with fewer than 4 points
+  * filename = input1.txt
+  * filename = input2.txt
+  * filename = input3.txt
+==> passed
+
+Test 6: check for dependence on either compareTo() or compare()
+        returning { -1, +1, 0 } instead of { negative integer,
+        positive integer, zero }
+  * filename = equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test6(TestBruteCollinearPoints.java:310)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:757)
+
+  * filename = input40.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 4
+    - 4 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 6
+    - 6 missing entries in student solution, including:
+      '(1000, 26000) -> (9000, 26000) -> (11000, 26000) -> (18000, 26000)'
+
+
+==> FAILED
+
+Test 7: check for fragile dependence on return value of toString()
+  * filename = equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.file(TestBruteCollinearPoints.java:166)
+    TestBruteCollinearPoints.test7(TestBruteCollinearPoints.java:320)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:760)
+
+  * filename = input40.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 4
+    - 4 missing entries in student solution, including:
+      '(2000, 29000) -> (4000, 29000) -> (22000, 29000) -> (28000, 29000)'
+
+
+  * filename = input48.txt
+    - number of entries in student   solution: 0
+    - number of entries in reference solution: 6
+    - 6 missing entries in student solution, including:
+      '(1000, 26000) -> (9000, 26000) -> (11000, 26000) -> (18000, 26000)'
+
+
+
+It is bad style to write code that depends on the particular format of
+the output from the toString() method, especially if your reason for
+doing so is to circumvent the public API (which intentionally does not
+provide access to the x- and y-coordinates).
+
+==> FAILED
+
+Test 8: random line segments, none vertical or horizontal
+  *  1 random line segment
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:344)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:362)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:763)
+
+    - failed on trial 1 of 500
+     4
+      7136  4521
+      3381  3156
+      4883  3702
+      5634  3975
+
+  *  5 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:344)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:363)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:763)
+
+    - failed on trial 1 of 250
+     20
+      7544 15016
+     10122  9218
+     12541 13050
+      5136 11568
+     12488 12800
+      3014  2926
+     18053 17864
+      6336 11792
+     11804  5386
+     14508 10826
+      7238  6074
+      9438   626
+       541 10798
+     11128  4026
+     12289 12187
+     10650 12492
+      5430  9374
+     13297 15639
+     12285 11576
+     10021  4420
+
+  * 10 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 40 out of bounds for length 40
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:344)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:364)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:763)
+
+    - failed on trial 1 of 100
+
+  * 15 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 60 out of bounds for length 60
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.noVerticalOrHorizontalSegments(TestBruteCollinearPoints.java:344)
+    TestBruteCollinearPoints.test8(TestBruteCollinearPoints.java:365)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:763)
+
+    - failed on trial 1 of 50
+
+==> FAILED
+
+Test 9: random line segments
+  *  1 random line segment
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 4 out of bounds for length 4
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:377)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:395)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:766)
+
+    - failed on trial 1 of 500
+     4
+      9607 10374
+      9535 10289
+      4135  3914
+      9823 10629
+
+  *  5 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:377)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:396)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:766)
+
+    - failed on trial 1 of 250
+     20
+      8692  9765
+      8189  6132
+      9340  9765
+      4218  7728
+      6296  8098
+     10276  9765
+      5282  5792
+      7130  8432
+     10168  9765
+      7820  6033
+      5282  8561
+      5282  8206
+     10150 11911
+      7574  5967
+      6672  8470
+      8404  8740
+      9829  6572
+      2944  7420
+      4980  6796
+      5282  8135
+
+  * 10 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 40 out of bounds for length 40
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:377)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:397)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:766)
+
+    - failed on trial 1 of 100
+
+  * 15 random line segments
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 60 out of bounds for length 60
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testSegments(TestBruteCollinearPoints.java:107)
+    TestBruteCollinearPoints.arbitrarySegments(TestBruteCollinearPoints.java:377)
+    TestBruteCollinearPoints.test9(TestBruteCollinearPoints.java:398)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:766)
+
+    - failed on trial 1 of 50
+
+==> FAILED
+
+Test 10: check that data type is immutable by testing whether each method
+         returns the same value, regardless of any intervening operations
+  * input8.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 8 out of bounds for length 8
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:445)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:532)
+    TestBruteCollinearPoints.test10(TestBruteCollinearPoints.java:547)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:769)
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+
+    - failed on trial 1 of 100
+
+  * equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:445)
+    TestBruteCollinearPoints.testImmutable(TestBruteCollinearPoints.java:532)
+    TestBruteCollinearPoints.test10(TestBruteCollinearPoints.java:548)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:769)
+
+    - sequence of operations was:
+          BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+
+    - failed on trial 1 of 100
+
+==> FAILED
+
+Test 11: check that data type does not mutate the constructor argument
+  * input8.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 8 out of bounds for length 8
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testMutateConstructorArgument(TestBruteCollinearPoints.java:561)
+    TestBruteCollinearPoints.test11(TestBruteCollinearPoints.java:581)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:772)
+
+  * equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testMutateConstructorArgument(TestBruteCollinearPoints.java:561)
+    TestBruteCollinearPoints.test11(TestBruteCollinearPoints.java:582)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:772)
+
+==> FAILED
+
+Test 12: numberOfSegments() is consistent with segments()
+  * filename = input8.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 8 out of bounds for length 8
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:589)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:615)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:620)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:775)
+
+  * filename = equidistant.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 15 out of bounds for length 15
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:589)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:615)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:621)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:775)
+
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = horizontal5.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:589)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:615)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:624)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:775)
+
+  * filename = vertical5.txt
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 20 out of bounds for length 20
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TestBruteCollinearPoints.testNumberOfSegments(TestBruteCollinearPoints.java:589)
+    TestBruteCollinearPoints.fileNumberOfSegments(TestBruteCollinearPoints.java:615)
+    TestBruteCollinearPoints.test12(TestBruteCollinearPoints.java:625)
+    TestBruteCollinearPoints.main(TestBruteCollinearPoints.java:775)
+
+  * filename = random23.txt
+==> FAILED
+
+Test 13: throws an exception if either the constructor argument is null
+         or any entry in array is null
+  * argument is null
+  * Point[] of length 10, number of null entries = 1
+  * Point[] of length 10, number of null entries = 10
+  * Point[] of length 4, number of null entries = 1
+  * Point[] of length 3, number of null entries = 1
+  * Point[] of length 2, number of null entries = 1
+  * Point[] of length 1, number of null entries = 1
+==> passed
+
+Test 14: check that the constructor throws an exception if duplicate points
+  * 50 points
+  * 25 points
+  * 5 points
+  * 4 points
+  * 3 points
+  * 2 points
+==> passed
+
+
+Total: 5/17 tests passed!
+
+
+================================================================
+Testing correctness of FastCollinearPoints
+*-----------------------------------------------------------
+Running 21 total tests.
+
+The inputs satisfy the following conditions:
+  - no duplicate points
+  - all x- and y-coordinates between 0 and 32,767
+
+Test 1: points from a file
+  * filename = input8.txt
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = input299.txt
+==> passed
+
+Test 2a: points from a file with horizontal line segments
+  * filename = horizontal5.txt
+  * filename = horizontal25.txt
+  * filename = horizontal50.txt
+  * filename = horizontal75.txt
+  * filename = horizontal100.txt
+==> passed
+
+Test 2b: random horizontal line segments
+  *  1 random horizontal line segment
+  *  5 random horizontal line segments
+  * 10 random horizontal line segments
+  * 15 random horizontal line segments
+==> passed
+
+Test 3a: points from a file with vertical line segments
+  * filename = vertical5.txt
+  * filename = vertical25.txt
+  * filename = vertical50.txt
+  * filename = vertical75.txt
+  * filename = vertical100.txt
+==> passed
+
+Test 3b: random vertical line segments
+  *  1 random vertical line segment
+  *  5 random vertical line segments
+  * 10 random vertical line segments
+  * 15 random vertical line segments
+==> passed
+
+Test 4a: points from a file with no line segments
+  * filename = random23.txt
+  * filename = random38.txt
+  * filename = random91.txt
+  * filename = random152.txt
+==> passed
+
+Test 4b: random points with no line segments
+  *  5 random points
+  * 10 random points
+  * 20 random points
+  * 50 random points
+==> passed
+
+Test 5a: points from a file with 5 or more on some line segments
+  * filename = input9.txt
+  * filename = input10.txt
+  * filename = input20.txt
+  * filename = input50.txt
+  * filename = input80.txt
+  * filename = input300.txt
+  * filename = inarow.txt
+==> passed
+
+Test 5b: points from a file with 5 or more on some line segments
+  * filename = kw1260.txt
+  * filename = rs1423.txt
+==> passed
+
+Test 6: points from a file with fewer than 4 points
+  * filename = input1.txt
+  * filename = input2.txt
+  * filename = input3.txt
+==> passed
+
+Test 7: check for dependence on either compareTo() or compare()
+        returning { -1, +1, 0 } instead of { negative integer,
+        positive integer, zero }
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = input299.txt
+==> passed
+
+Test 8: check for fragile dependence on return value of toString()
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+==> passed
+
+Test 9: random line segments, none vertical or horizontal
+  *  1 random line segment
+  *  5 random line segments
+  * 25 random line segments
+  * 50 random line segments
+  * 100 random line segments
+==> passed
+
+Test 10: random line segments
+  *  1 random line segment
+  *  5 random line segments
+  * 25 random line segments
+  * 50 random line segments
+  * 100 random line segments
+==> passed
+
+Test 11: random distinct points in a given range
+  * 5 random points in a 10-by-10 grid
+  * 10 random points in a 10-by-10 grid
+  * 50 random points in a 10-by-10 grid
+  * 90 random points in a 10-by-10 grid
+  * 200 random points in a 50-by-50 grid
+==> passed
+
+Test 12: m*n points on an m-by-n grid
+  * 3-by-3 grid
+  * 4-by-4 grid
+  * 5-by-5 grid
+  * 10-by-10 grid
+  * 20-by-20 grid
+  * 5-by-4 grid
+  * 6-by-4 grid
+  * 10-by-4 grid
+  * 15-by-4 grid
+  * 25-by-4 grid
+==> passed
+
+Test 13: check that data type is immutable by testing whether each method
+         returns the same value, regardless of any intervening operations
+  * input8.txt
+  * equidistant.txt
+==> passed
+
+Test 14: check that data type does not mutate the constructor argument
+  * input8.txt
+  * equidistant.txt
+==> passed
+
+Test 15: numberOfSegments() is consistent with segments()
+  * filename = input8.txt
+  * filename = equidistant.txt
+  * filename = input40.txt
+  * filename = input48.txt
+  * filename = horizontal5.txt
+  * filename = vertical5.txt
+  * filename = random23.txt
+==> passed
+
+Test 16: throws an exception if either constructor argument is null
+         or any entry in array is null
+  * argument is null
+  * Point[] of length 10, number of null entries = 1
+  * Point[] of length 10, number of null entries = 10
+  * Point[] of length 4, number of null entries = 1
+  * Point[] of length 3, number of null entries = 1
+  * Point[] of length 2, number of null entries = 1
+  * Point[] of length 1, number of null entries = 1
+==> passed
+
+Test 17: check that the constructor throws an exception if duplicate points
+  * 50 points
+  * 25 points
+  * 5 points
+  * 4 points
+  * 3 points
+  * 2 points
+==> passed
+
+
+Total: 21/21 tests passed!
+
+
+================================================================
+********************************************************************************
+*  MEMORY
+********************************************************************************
+
+Analyzing memory of Point
+*-----------------------------------------------------------
+Running 1 total tests.
+
+The maximum amount of memory per Point object is 32 bytes.
+
+Student memory = 24 bytes (passed)
+
+Total: 1/1 tests passed!
+
+
+================================================================
+
+
+
+********************************************************************************
+*  TIMING
+********************************************************************************
+
+Timing BruteCollinearPoints
+*-----------------------------------------------------------
+Running 10 total tests.
+
+Test 1a-1e: Find collinear points among n random distinct points
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    16   0.00         925           0            925                   46         
+=> passed    32   0.00        9021           0           9021                  125         
+=> passed    64   0.00       79485           0          79485                  309         
+=> passed   128   0.01      666877           0         666877                  728         
+=> passed   256   0.06     5462525           0        5462525                 1725         
+==> 5/5 tests passed
+
+Test 2a-2e: Find collinear points among n/4 arbitrary line segments
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+
+    java.lang.ArrayIndexOutOfBoundsException: Index 16 out of bounds for length 16
+
+    BruteCollinearPoints.<init>(BruteCollinearPoints.java:43)
+    TimeBruteCollinearPoints.timingTest(TimeBruteCollinearPoints.java:93)
+    TimeBruteCollinearPoints.time(TimeBruteCollinearPoints.java:165)
+    TimeBruteCollinearPoints.timeArbitrarySegments(TimeBruteCollinearPoints.java:150)
+    TimeBruteCollinearPoints.main(TimeBruteCollinearPoints.java:204)
+
+Total: 5/10 tests passed!
+
+
+================================================================
+
+
+
+Timing FastCollinearPoints
+*-----------------------------------------------------------
+Running 31 total tests.
+
+Test 1a-1g: Find collinear points among n random distinct points
+
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    64   0.00        7936       18701          45338                  366         
+=> passed   128   0.01       32256       88894         210044                  855         
+=> passed   256   0.02      130048      413003         956054                 1967         
+=> passed   512   0.10      522240     1891218        4304676                 4483         
+=> passed  1024   0.36     2093050     8496944       19086938                 9997         
+=> passed  2048   0.88     8380347    37951711       84283769                22038         
+==> 6/6 tests passed
+
+lg ratio(slopeTo() + 2*compare()) = lg (84283769 / 19086938) = 2.14
+=> passed
+
+==> 7/7 tests passed
+
+Test 2a-2g: Find collinear points among the n points on an n-by-1 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    64   0.00        4032        4509          13050                  882         
+=> passed   128   0.00       16256       17457          51170                 1881         
+=> passed   256   0.00       65280       67973         201226                 4691         
+=> passed   512   0.01      261632      267972         797576                 9974         
+=> passed  1024   0.02     1047552     1062051        3171654                22933         
+=> passed  2048   0.04     4192256     4225313       12642882                51009         
+=> passed  4096   0.10    16773120    16847550       50468220               112613         
+==> 7/7 tests passed
+
+lg ratio(slopeTo() + 2*compare()) = lg (50468220 / 12642882) = 2.00
+=> passed
+
+==> 8/8 tests passed
+
+Test 3a-3g: Find collinear points among the n points on an n/4-by-4 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    64   0.00        6164       17250          40664                 1906         
+=> passed   128   0.00       24788       72957         170702                 6363         
+=> passed   256   0.01       99412      283294         666000                23323         
+=> passed   512   0.02      398164     1106527        2611218                91215         
+=> passed  1024   0.07     1593684     4399934       10393552               351774         
+=> passed  2048   0.25     6376788    17525875       41428538              1386554         
+=> passed  4096   0.90    25511252    69871794      165254840              5539012         
+==> 7/7 tests passed
+
+lg ratio(slopeTo() + 2*compare()) = lg (165254840 / 41428538) = 2.00
+=> passed
+
+==> 8/8 tests passed
+
+Test 4a-4g: Find collinear points among the n points on an n/8-by-8 grid
+
+                                                      slopeTo()
+             n    time     slopeTo()   compare()  + 2*compare()        compareTo()
+-----------------------------------------------------------------------------------------------
+=> passed    64   0.00        6188       18739          43666                 1767         
+=> passed   128   0.00       24912       86438         197788                 6505         
+=> passed   256   0.01       99928      383342         866612                23981         
+=> passed   512   0.03      400264     1621396        3643056                92492         
+=> passed  1024   0.12     1602100     6732636       15067372               356113         
+=> passed  2048   0.47     6410484    27722551       61855586              1409924         
+=> passed  4096   1.74    25646060   112806363      251258786              5567194         
+==> 7/7 tests passed
+
+lg ratio(slopeTo() + 2*compare()) = lg (251258786 / 61855586) = 2.02
+=> passed
+
+==> 8/8 tests passed
+
+Total: 31/31 tests passed!
+
+
+================================================================
+
+
+
