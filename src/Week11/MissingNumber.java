@@ -18,7 +18,7 @@ public class MissingNumber {
             array[item]--;
         }
 
-        // similarly whenever we scan an item in brr , increment its value for the corresponding item in array
+        // similarly whenever we scan an item in brr , increment its value for the corresponding item in arr
         // eg : after end of previous for loop , 7 is missing one times in brr.
         // now we found 7 in brr, so increment its corresponding index so that 7 is missing 0 times in brr
         for (int i = 0; i < brr.size(); i++) {
@@ -38,20 +38,20 @@ public class MissingNumber {
     public static List<Integer> missingNumbers2(List<Integer> arr, List<Integer> brr) {    //O(N)
         Hashtable<Integer, Integer> hashTable = new Hashtable<>();
         for(int i : brr){
-            if(hashTable.containsKey(i)){
-                hashTable.put(i, hashTable.get(i)+1);
+            if(hashTable.containsKey(i)){   //key = chỉ số list brr (i)
+                hashTable.put(i, hashTable.get(i) + 1);
             } else {
                 hashTable.put(i, 1);
             }
         }
         for(int i : arr){
             if(hashTable.get(i) == 1){
-                hashTable.remove(i);
+                hashTable.remove(i);   // removes the values for particular key
             } else {
-                hashTable.put(i, hashTable.get(i)-1);
+                hashTable.put(i, hashTable.get(i) - 1);
             }
         }
-        List<Integer> list = new ArrayList<>(hashTable.keySet()); //convert hashtable keys to a list
+        List<Integer> list = new ArrayList<>(hashTable.keySet()); //convert hashtable keys into a list
         Collections.sort(list);
         return list;
 }
@@ -62,7 +62,21 @@ public class MissingNumber {
             brr.remove(a);
         }
         Collections.sort(brr);
-        List<Integer> ans = new ArrayList<>(new LinkedHashSet<>(brr));
+        List<Integer> ans = new ArrayList<>(new LinkedHashSet<>(brr));      //convert to arraylist
         return ans;
+    }
+
+    public static void main(String args[]) {
+        List<Integer> arr = new ArrayList<>();
+        List<Integer> brr = new ArrayList<>();
+        arr.add(7);
+        arr.add(2);
+        arr.add(3);
+        brr.add(7);
+        brr.add(7);
+        brr.add(2);
+        brr.add(4);
+        brr.add(3);
+        System.out.println(missingNumbers2(arr, brr));
     }
 }
